@@ -1,12 +1,11 @@
-# Import libraries
+# IMPORT LIBRARIES AND MODULES
 import datetime
 from tkinter import *
 import tkinter.messagebox as mb
 from tkinter import ttk
-from tkcalendar import DateEntry
 import connect_db
 
-# Creating constant variables
+# DESIGN VARIABLES
 labelfont = ('Ariel', 12)
 entryfont = ('Ariel', 11)
 btfont = ('Ariel',11,'bold')
@@ -14,16 +13,18 @@ entrywidth = 22
 btwidth = 15
 lf_bg = 'lavender' # bg color for the left_frame
 
+##################### PROGRAM DECLARATION ########################
 class StudentRecordSystem():
     def __init__(self, main):
-    # WINDOW INIT
+
+    #=========== WINDOW INIT ==================
         self.main = main
         self.main.title('Student Management System')
         self.main.geometry('1000x600')
         self.main.resizable(0, 0)
         self.main.iconbitmap('student.ico')
 
-    # DECLARE VARIABLES
+    #=========== DECLARE VARIABLES ==================
         self.id_strvar = StringVar()
         self.name_strvar = StringVar()
         self.dob_strvar = StringVar()
@@ -77,12 +78,10 @@ class StudentRecordSystem():
         Entry(search_frame, width=30, textvariable=self.search_strvar, font=('Ariel',10)).place(x=235, y=9)
         Button(search_frame, text='Search', font=('Ariel',10,'bold'), command=self.search_record, width=9, height=1).place(x=490, y=7)
 
-
     #=========== TABLE FRAME ==================
         # LABEL
         self.table = ttk.Treeview(table_frame, selectmode=BROWSE,     # Create a table view
                     columns=("ID", "Name", "Date of Birth", "Gender", "Class", "Contact Number"))
-
         # SCROLLER
         X_scroller = Scrollbar(self.table, orient=HORIZONTAL)
         Y_scroller = Scrollbar(self.table, orient=VERTICAL, command=self.table.yview)
@@ -229,9 +228,9 @@ class StudentRecordSystem():
             self.contact_strvar.set(('0'+str(row[5])))  # concat with 0 so that the 0 is kept while editing
 
 
-class StudentRecordSystem():
-    pass
+##################### PROGRAM INITIALIZATION ########################
+if __name__ == "__main__":
+    print("Starting the Student Record System")
     main = Tk()
     obj = StudentRecordSystem(main)        
-    #main.update()
     main.mainloop() 
