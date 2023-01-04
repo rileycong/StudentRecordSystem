@@ -1,5 +1,4 @@
 # IMPORT LIBRARIES AND MODULES
-import datetime
 from tkinter import *
 import tkinter.messagebox as mb
 from tkinter import ttk
@@ -60,7 +59,7 @@ class StudentRecordSystem():
         Entry(left_frame, width=entrywidth, textvariable=self.id_strvar, font=entryfont).place(x=170, y=50)
         Entry(left_frame, width=entrywidth, textvariable=self.name_strvar, font=entryfont).place(x=170, y=100)
         Entry(left_frame, width=entrywidth, textvariable=self.dob_strvar, font=entryfont).place(x=170, y=150)
-        OptionMenu(left_frame, self.gender_strvar, 'Male', "Female").place(x=170, y=200, width=150)
+        OptionMenu(left_frame, self.gender_strvar, 'Male', 'Female').place(x=170, y=200, width=150)
         Entry(left_frame, width=entrywidth, textvariable=self.class_strvar, font=entryfont).place(x=170,y=250)
         Entry(left_frame, width=entrywidth, textvariable=self.contact_strvar, font=entryfont).place(x=170, y=300)
 
@@ -72,22 +71,23 @@ class StudentRecordSystem():
         Button(left_frame, text='Exit Program', font=btfont, command=self.exit_program, width=btwidth).place(x=200, y=480)
 
     #=========== SEARCH FRAME ==================
-        Label(search_frame, text="Search By", font=('Ariel',11), bg='grey', fg='azure').place(x=5, y=8)
+        Label(search_frame, text="Search By", font=('Ariel',10), bg='grey', fg='azure').place(x=4, y=8)
         search_option=['ID', 'Name', 'ContactNumber']
-        OptionMenu(search_frame, self.searchby_strvar, *search_option).place(x=90, y=8, width=125, height=25)
-        Entry(search_frame, width=30, textvariable=self.search_strvar, font=('Ariel',10)).place(x=235, y=9)
-        Button(search_frame, text='Search', font=('Ariel',10,'bold'), command=self.search_record, width=9, height=1).place(x=490, y=7)
+        OptionMenu(search_frame, self.searchby_strvar, *search_option).place(x=83, y=8, width=125, height=25)
+        Entry(search_frame, width=25, textvariable=self.search_strvar, font=('Ariel',10)).place(x=215, y=9)
+        Button(search_frame, text='Search', font=('Ariel',10,'bold'), command=self.search_record, width=9, height=1).place(x=410, y=7)
+        Button(search_frame, text='Show All', font=('Ariel',10,'bold'), command=self.display_records, width=9, height=1).place(x=500, y=7)
 
     #=========== TABLE FRAME ==================
         # LABEL
         self.table = ttk.Treeview(table_frame, selectmode=BROWSE,     # Create a table view
                     columns=("ID", "Name", "Date of Birth", "Gender", "Class", "Contact Number"))
         # SCROLLER
-        X_scroller = Scrollbar(self.table, orient=HORIZONTAL)
-        Y_scroller = Scrollbar(self.table, orient=VERTICAL, command=self.table.yview)
-        X_scroller.pack(side=BOTTOM, fill=X)
+        #X_scroller = Scrollbar(self.table, orient=HORIZONTAL)
+        Y_scroller = Scrollbar(self.table, orient=VERTICAL)
+        #X_scroller.pack(side=BOTTOM, fill=X)
         Y_scroller.pack(side=RIGHT, fill=Y)
-        X_scroller.config(command=self.table.xview)
+        #X_scroller.config(command=self.table.xview)
         Y_scroller.config(command=self.table.yview)
 
         # CONFIGURE TABLE
@@ -129,13 +129,16 @@ class StudentRecordSystem():
                 cur.execute(add,(ID, Name, DOB, Gender, Class, Contact))
                 con.commit()
                 mb.showinfo('Record added', f"Record of {Name} was successfully added")
+                self.reset_search()
                 self.reset_fields()
                 self.display_records()
                 con.close()
             except:
-                mb.showerror('Error!', 'Invalid or existed input')
+                mb.showerror('Error!', 'Invalid or existed input\n\n**ID and Contact Number must be numbers**')
 
     def display_records(self):
+        self.reset_search()
+        self.reset_fields()
         con = connect_db.getConnection()
         cur = con.cursor()      
         cur.execute('select * from student_record')
@@ -162,11 +165,12 @@ class StudentRecordSystem():
                     cur.execute(update,(ID, Name, DOB, Gender, Class, Contact,ID))
                     con.commit()
                     mb.showinfo('Record updated', f"Record of {Name} was successfully updated")
+                    self.reset_search()
                     self.reset_fields()
                     self.display_records()
                     con.close()
                 except:
-                    mb.showerror('Error!', 'Invalid or existed input')
+                    mb.showerror('Error!', 'Invalid or existed input\n\n**ID and Contact Number must be numbers**')
 
     def delete_record(self):
         mess = mb.askyesno('Delete','Do you want to delete the information of this student?')
@@ -177,11 +181,13 @@ class StudentRecordSystem():
             cur.execute(delete,(self.id_strvar.get()))
             con.commit()
             mb.showinfo('Record deleted', f"Record of {self.name_strvar.get()} was successfully deleted")
+            self.reset_search()
             self.reset_fields()
             self.display_records()
             con.close()
     
     def search_record(self):
+        self.reset_fields()
         con = connect_db.getConnection()
         cur = con.cursor()
         cur.execute("select * from student_record where "\
@@ -213,6 +219,10 @@ class StudentRecordSystem():
     def reset_fields(self):
             for i in ['self.id_strvar', 'self.name_strvar', 'self.dob_strvar', \
             'self.gender_strvar', 'self.class_strvar', 'self.contact_strvar']:
+                exec(f"{i}.set('')")
+
+    def reset_search(self):
+            for i in ['self.searchby_strvar', 'self.search_strvar']:
                 exec(f"{i}.set('')")
 
     def get_cursor(self,ev):   # This function select and focus on a single row
