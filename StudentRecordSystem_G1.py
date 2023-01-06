@@ -199,6 +199,10 @@ class StudentRecordSystem():
             for row in rows:
                 self.table.insert('',END,values=row)
             con.commit()
+        else:
+            self.table.delete(*self.table.get_children())
+            mb.showinfo('No Record Found', f"No record with the {self.searchby_strvar.get()} of {self.search_strvar.get()} can be found")
+            self.display_records()
         con.close()
         
     def exit_program(self):
