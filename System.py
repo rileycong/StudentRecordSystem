@@ -10,7 +10,7 @@ entryfont = ('Ariel', 11)
 btfont = ('Ariel',11,'bold')
 entrywidth = 22
 btwidth = 15
-lf_bg = 'lavender' # bg color for the left_frame
+mg_bg = 'lightsteelblue2' # bg color for the management_frame
 
 ##################### PROGRAM DECLARATION ########################
 class StudentRecordSystem():
@@ -18,12 +18,12 @@ class StudentRecordSystem():
 
     #=========== WINDOW INIT ==================
         self.main = main
-        self.main.title('Student Management System')
+        self.main.title('Student Record System')
         self.main.geometry('1000x600')
         self.main.resizable(0, 0)
         self.main.iconbitmap('student.ico')
 
-    #=========== DECLARE VARIABLES ==================
+    #=========== DECLARE ENTRY VARIABLES ==================
         self.id_strvar = StringVar()
         self.name_strvar = StringVar()
         self.dob_strvar = StringVar()
@@ -34,49 +34,49 @@ class StudentRecordSystem():
         self.search_strvar = StringVar()
 
     #=========== WINDOW ZONING ==================
-        title_frame = Frame(main, bg='teal')
+        title_frame = Frame(main, bg='SkyBlue3')
         title_frame.place(x=0, y=0, height=35, width=1000)
-        left_frame = Frame(main, bg=lf_bg)
-        left_frame.place(x=0, y=36, height=600, width=400)
-        search_frame = Frame(main, bg="grey")
+        management_frame = Frame(main, bg=mg_bg)
+        management_frame.place(x=0, y=36, height=600, width=400)
+        search_frame = Frame(main, bg="dim gray")
         search_frame.place(x=400, y=36, height=40, width=600)
         table_frame = Frame(main, bg="grey")
         table_frame.place(x=400, y=76, height=560, width=600)
 
     #=========== TITLE FRAME ==================
-        Label(title_frame, text="STUDENT MANAGEMENT SYSTEM", font=("Ubuntu", 14, 'bold'), bg='teal', fg='light cyan').place(x=350, y=3)
+        Label(title_frame, text="STUDENT RECORD SYSTEM", font=("Verdana", 14, 'bold'), bg='SkyBlue3', fg='snow').place(x=350, y=3)
 
     #=========== LEFT FRAME ==================
         # LABELS
-        Label(left_frame, text="ID", font=labelfont, bg=lf_bg).place(x=30, y=50)
-        Label(left_frame, text="Name", font=labelfont, bg=lf_bg).place(x=30,y=100)
-        Label(left_frame, text="Date of Birth", font=labelfont, bg=lf_bg).place(x=30,y=150)
-        Label(left_frame, text="Gender", font=labelfont, bg=lf_bg).place(x=30, y=200)
-        Label(left_frame, text="Class", font=labelfont, bg=lf_bg).place(x=30, y=250)
-        Label(left_frame, text="Contact Number", font=labelfont, bg=lf_bg).place(x=30, y=300)
+        Label(management_frame, text="ID", font=labelfont, bg=mg_bg).place(x=30, y=50)
+        Label(management_frame, text="Name", font=labelfont, bg=mg_bg).place(x=30,y=100)
+        Label(management_frame, text="Date of Birth", font=labelfont, bg=mg_bg).place(x=30,y=150)
+        Label(management_frame, text="Gender", font=labelfont, bg=mg_bg).place(x=30, y=200)
+        Label(management_frame, text="Class", font=labelfont, bg=mg_bg).place(x=30, y=250)
+        Label(management_frame, text="Contact Number", font=labelfont, bg=mg_bg).place(x=30, y=300)
 
         # ENTRY
-        Entry(left_frame, width=entrywidth, textvariable=self.id_strvar, font=entryfont).place(x=170, y=50)
-        Entry(left_frame, width=entrywidth, textvariable=self.name_strvar, font=entryfont).place(x=170, y=100)
-        Entry(left_frame, width=entrywidth, textvariable=self.dob_strvar, font=entryfont).place(x=170, y=150)
-        OptionMenu(left_frame, self.gender_strvar, 'Male', 'Female').place(x=170, y=200, width=150)
-        Entry(left_frame, width=entrywidth, textvariable=self.class_strvar, font=entryfont).place(x=170,y=250)
-        Entry(left_frame, width=entrywidth, textvariable=self.contact_strvar, font=entryfont).place(x=170, y=300)
+        Entry(management_frame, width=entrywidth, textvariable=self.id_strvar, font=entryfont).place(x=170, y=50)
+        Entry(management_frame, width=entrywidth, textvariable=self.name_strvar, font=entryfont).place(x=170, y=100)
+        Entry(management_frame, width=entrywidth, textvariable=self.dob_strvar, font=entryfont).place(x=170, y=150)
+        OptionMenu(management_frame, self.gender_strvar, 'Male', 'Female').place(x=170, y=200, width=150)
+        Entry(management_frame, width=entrywidth, textvariable=self.class_strvar, font=entryfont).place(x=170,y=250)
+        Entry(management_frame, width=entrywidth, textvariable=self.contact_strvar, font=entryfont).place(x=170, y=300)
 
         # BUTTONS
-        Button(left_frame, text='Add Record', font=btfont, command=self.add_record, width=btwidth).place(x=120, y=380)
-        Button(left_frame, text='Clear Fields', font=btfont, command=self.reset_fields, width=btwidth).place(x=40, y=430)
-        Button(left_frame, text='Update Record', font=btfont, command=self.update_record, width=btwidth).place(x=200, y=430)
-        Button(left_frame, text='Delete Record', font=btfont, command=self.delete_record, width=btwidth).place(x=40, y=480)
-        Button(left_frame, text='Exit Program', font=btfont, command=self.exit_program, width=btwidth).place(x=200, y=480)
+        Button(management_frame, text='Add Record', font=btfont, command=self.add_record, width=btwidth, cursor='hand2').place(x=120, y=380)
+        Button(management_frame, text='Clear Fields', font=btfont, command=self.reset_fields, width=btwidth, cursor='hand2').place(x=40, y=430)
+        Button(management_frame, text='Update Record', font=btfont, command=self.update_record, width=btwidth, cursor='hand2').place(x=200, y=430)
+        Button(management_frame, text='Delete Record', font=btfont, command=self.delete_record, width=btwidth, cursor='hand2').place(x=40, y=480)
+        Button(management_frame, text='Exit Program', font=btfont, command=self.exit_program, width=btwidth, cursor='hand2').place(x=200, y=480)
 
     #=========== SEARCH FRAME ==================
-        Label(search_frame, text="Search By", font=('Ariel',10), bg='grey', fg='azure').place(x=4, y=8)
-        search_option=['ID', 'Name', 'ContactNumber']
+        Label(search_frame, text="Search By", font=('Verdana',10), bg='dim grey', fg='snow').place(x=4, y=8)
+        search_option=['ID', 'Name', 'Class','ContactNumber']
         OptionMenu(search_frame, self.searchby_strvar, *search_option).place(x=83, y=8, width=125, height=25)
         Entry(search_frame, width=25, textvariable=self.search_strvar, font=('Ariel',10)).place(x=215, y=9)
-        Button(search_frame, text='Search', font=('Ariel',10,'bold'), command=self.search_record, width=9, height=1).place(x=410, y=7)
-        Button(search_frame, text='Show All', font=('Ariel',10,'bold'), command=self.display_records, width=9, height=1).place(x=500, y=7)
+        Button(search_frame, text='Search', font=('Ariel',10,'bold'), command=self.search_record, width=9, height=1, cursor='hand2').place(x=410, y=7)
+        Button(search_frame, text='Show All', font=('Ariel',10,'bold'), command=self.display_records, width=9, height=1, cursor='hand2').place(x=500, y=7)
 
     #=========== TABLE FRAME ==================
         # LABEL
@@ -120,7 +120,7 @@ class StudentRecordSystem():
         self.get_input_data()
         if not ID or not Name or not DOB or not Gender\
         or not Class or not Contact:
-            mb.showerror('Error!', "Please fill all the missing fields!!")
+            mb.showerror('Error', "Please fill all the missing fields!!")
         else:
             try:
                 con = connect_db.getConnection()
@@ -134,7 +134,7 @@ class StudentRecordSystem():
                 self.display_records()
                 con.close()
             except:
-                mb.showerror('Error!', 'Invalid or existed input\n\n**ID and Contact Number must be numbers**')
+                mb.showerror('Error', 'Invalid or existed input\n\n**ID and Contact Number must be numbers**')
 
     def display_records(self):
         self.reset_search()
@@ -156,7 +156,7 @@ class StudentRecordSystem():
             self.get_input_data()
             if not ID or not Name or not DOB or not Gender\
             or not Class or not Contact:
-                mb.showerror('Error!', "Please fill all the missing fields!!")
+                mb.showerror('Error', "Please fill all the missing fields!!")
             else:
                 try:
                     con = connect_db.getConnection()
@@ -170,7 +170,7 @@ class StudentRecordSystem():
                     self.display_records()
                     con.close()
                 except:
-                    mb.showerror('Error!', 'Invalid or existed input\n\n**ID and Contact Number must be numbers**')
+                    mb.showerror('Error', 'Invalid or existed input\n\n**ID and Contact Number must be numbers**')
 
     def delete_record(self):
         mess = mb.askyesno('Delete','Do you want to delete the information of this student?')
@@ -201,7 +201,7 @@ class StudentRecordSystem():
             con.commit()
         else:
             self.table.delete(*self.table.get_children())
-            mb.showinfo('No Record Found', f"No record with the {self.searchby_strvar.get()} of {self.search_strvar.get()} can be found")
+            mb.showinfo('No Record Found', f"No record with the {self.searchby_strvar.get()} of '{self.search_strvar.get()}' can be found.")
             self.display_records()
         con.close()
         
@@ -210,7 +210,7 @@ class StudentRecordSystem():
         if mess>0:
             self.main.destroy()
 
-    # UTIL FUNCTIONS
+    # UTILITY FUNCTIONS
     def get_input_data(self):
         global ID, Name, DOB, Gender, Class, Contact
         ID = self.id_strvar.get()
@@ -241,10 +241,9 @@ class StudentRecordSystem():
             self.class_strvar.set(row[4])
             self.contact_strvar.set(('0'+str(row[5])))  # concat with 0 so that the 0 is kept while editing
 
-
 ##################### PROGRAM INITIALIZATION ########################
 if __name__ == "__main__":
     print("Starting the Student Record System")
     main = Tk()
     obj = StudentRecordSystem(main)        
-    main.mainloop() 
+    main.mainloop()
